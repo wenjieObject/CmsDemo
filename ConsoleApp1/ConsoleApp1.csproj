@@ -1,0 +1,13 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>netcoreapp2.2</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Czar.Cms.DataBase\Czar.Cms.DataBase.csproj" />
+    <ProjectReference Include="..\Czar.Cms.Models\Czar.Cms.Models.csproj" />
+  </ItemGroup>
+
+</Project>
