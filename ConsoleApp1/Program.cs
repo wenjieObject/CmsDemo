@@ -52,12 +52,13 @@ namespace ConsoleApp1
             services = RegisterSqlServerContext(services);
             services.Configure<CodeGenerateOption>(options =>
             {
-                options.ModelsNamespace = "Reach.AeroIOT.Models";
-                options.IRepositoriesNamespace = "Reach.AeroIOT.IRepositories";
-                options.RepositoriesNamespace = "Reach.AeroIOT.Repositories";
-                options.ControllersNamespace = "Reach.AeroIOT.Controllers";
-                options.OutputPath = "E:\\CodeGenerator\\Reach.AeroIOT";
+                options.ModelsNamespace = "Czar.Cms.Models";
+                options.IRepositoriesNamespace = "Czar.Cms.IRepositories";
+                options.RepositoriesNamespace = "Czar.Cms.Repositories";
+                options.ControllersNamespace = "Czar.Cms.Controllers";
+                options.OutputPath = "D:\\VSCode\\Czar.Cms";
             });
+            //暂不使用redis
             //services.UseCsRedisClient(
             //    "127.0.0.1:6379,abortConnect=false,connectRetry=3,connectTimeout=3000,defaultDatabase=1,syncTimeout=3000,version=3.2.100,responseTimeout=3000");
             services.AddOptions();

@@ -1,22 +1,22 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
-using {ModelsNamespace};
-using {IRepositoriesNamespace};
+using Czar.Cms.Models;
+using Czar.Cms.IRepositories;
 using System.Threading.Tasks;
 using Czar.Cms.Models;
 using System.Linq;
 
-namespace {ControllersNamespace}
+namespace Czar.Cms.Controllers
 {
-    public class {ModelTypeName}Controller : Controller
+    public class ArticleCategoryController : Controller
     {
-        private I{ModelTypeName}Repository {ModelTypeName}Repository;
+        private IArticleCategoryRepository ArticleCategoryRepository;
         
-        public {ModelTypeName}Controller(I{ModelTypeName}Repository repository)
+        public ArticleCategoryController(IArticleCategoryRepository repository)
         {
-            {ModelTypeName}Repository = repository ?? throw new ArgumentNullException(nameof(repository));
+            ArticleCategoryRepository = repository ?? throw new ArgumentNullException(nameof(repository));
         }
 
         #region Views
@@ -35,7 +35,7 @@ namespace {ControllersNamespace}
         {
             return Task.Factory.StartNew<IActionResult>(() =>
             {
-                    var rows = {ModelTypeName}Repository.Get().ToList();
+                    var rows = ArticleCategoryRepository.Get().ToList();
                     return Json(ExcutedResult.SuccessResult(rows));
             });
         }
@@ -45,8 +45,8 @@ namespace {ControllersNamespace}
         {
             return Task.Factory.StartNew<IActionResult>(() =>
             {
-                var total = {ModelTypeName}Repository.Count(m => true);
-                var rows = {ModelTypeName}Repository.GetByPagination(m => true, pageSize, pageIndex, true,
+                var total = ArticleCategoryRepository.Count(m => true);
+                var rows = ArticleCategoryRepository.GetByPagination(m => true, pageSize, pageIndex, true,
                     m => m.Id).ToList();
                 return Json(PaginationResult.PagedResult(rows, total, pageSize, pageIndex));
             });
@@ -57,13 +57,13 @@ namespace {ControllersNamespace}
         /// <param name="model"></param>
         /// <returns></returns>
         [AjaxRequestOnly,HttpPost,ValidateAntiForgeryToken]
-        public Task<IActionResult> Add({ModelTypeName} model)
+        public Task<IActionResult> Add(ArticleCategory model)
         {
             return Task.Factory.StartNew<IActionResult>(() =>
             {
                 if(!ModelState.IsValid)
                     return Json(ExcutedResult.FailedResult("数据验证失败"));
-                {ModelTypeName}Repository.AddAsync(model, false);
+                ArticleCategoryRepository.AddAsync(model, false);
                 return Json(ExcutedResult.SuccessResult());
             });
         }
@@ -73,13 +73,13 @@ namespace {ControllersNamespace}
         /// <param name="model"></param>
         /// <returns></returns>
         [AjaxRequestOnly, HttpPost]
-        public Task<IActionResult> Edit({ModelTypeName} model)
+        public Task<IActionResult> Edit(ArticleCategory model)
         {
             return Task.Factory.StartNew<IActionResult>(() =>
             {
                 if (!ModelState.IsValid)
                     return Json(ExcutedResult.FailedResult("数据验证失败"));
-                {ModelTypeName}Repository.Edit(model, false);
+                ArticleCategoryRepository.Edit(model, false);
                 return Json(ExcutedResult.SuccessResult());
             });
         }
@@ -93,7 +93,7 @@ namespace {ControllersNamespace}
         {
             return Task.Factory.StartNew<IActionResult>(() =>
             {
-                {ModelTypeName}Repository.Delete(id, false);
+                ArticleCategoryRepository.Delete(id, false);
                 return Json(ExcutedResult.SuccessResult("成功删除一条数据。"));
             });
         }

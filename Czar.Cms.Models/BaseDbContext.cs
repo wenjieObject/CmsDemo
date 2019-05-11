@@ -37,8 +37,6 @@ namespace Czar.Cms.Models
                 throw new ArgumentNullException(nameof(option));
             if (string.IsNullOrEmpty(option.Value.ConnectionString))
                 throw new ArgumentNullException(nameof(option.Value.ConnectionString));
-            //if (string.IsNullOrEmpty(option.Value.ModelAssemblyName))
-            //    throw new ArgumentNullException(nameof(option.Value.ModelAssemblyName));
             Option = option.Value;
         }
 

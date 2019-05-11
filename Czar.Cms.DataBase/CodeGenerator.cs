@@ -13,6 +13,7 @@ using AspectCore.Extensions.Reflection;
 using Microsoft.Extensions.Options;
 using Czar.Cms.Models;
 using System.Text.RegularExpressions;
+using System.Xml.Linq;
 //using NpgsqlTypes;
 
 namespace Czar.Cms.DataBase
@@ -101,17 +102,19 @@ namespace Czar.Cms.DataBase
         {
             var currentAssembly = Assembly.GetExecutingAssembly();
             var content = string.Empty;
-
-            using (var stream = currentAssembly.GetManifestResourceStream($"{currentAssembly.GetName().Name}.CodeTemplate.{templateName}"))
+            //获取不到txt文件流？ D:\VSCode\Czar.Cms\Czar.Cms.DataBase\CodeTemplate\ModelTemplate.txt
+            string name = $"D:\\VSCode\\Czar.Cms\\Czar.Cms.DataBase\\CodeTemplate\\{templateName}";
+            StreamReader sr=null;
+            try
             {
-                if (stream != null)
-                {
-                    using (var reader = new StreamReader(stream))
-                    {
-                        content = reader.ReadToEnd();
-                    }
-                }
+                sr = new StreamReader(name, false);
+                content = sr.ReadToEnd();
             }
+            catch(Exception e)
+            {
+
+            }
+            sr.Close();
             return content;
         }
 
@@ -123,7 +126,7 @@ namespace Czar.Cms.DataBase
         /// <param name="ifExsitedCovered"></param>
         private static void GenerateIRepository(string modelTypeName, string keyTypeName, bool ifExsitedCovered = false)
         {
-            var iRepositoryPath = options.Value.OutputPath + Delimiter + "IRepositories";
+            var iRepositoryPath = options.Value.OutputPath + Delimiter + "Czar.Cms.IRepositories";
             if (!Directory.Exists(iRepositoryPath))
             {
                 Directory.CreateDirectory(iRepositoryPath);
@@ -146,7 +149,7 @@ namespace Czar.Cms.DataBase
         /// <param name="ifExsitedCovered"></param>
         private static void GenerateRepository(string modelTypeName, string keyTypeName, bool ifExsitedCovered = false)
         {
-            var repositoryPath = options.Value.OutputPath + Delimiter + "Repositories";
+            var repositoryPath = options.Value.OutputPath + Delimiter + "Czar.Cms.Repositories";
             if (!Directory.Exists(repositoryPath))
             {
                 Directory.CreateDirectory(repositoryPath);
@@ -171,7 +174,7 @@ namespace Czar.Cms.DataBase
         /// <param name="ifExsitedCovered"></param>
         private static void GenerateController(string modelTypeName, string keyTypeName, bool ifExsitedCovered = false)
         {
-            var controllerPath = options.Value.OutputPath + Delimiter + "Controllers";
+            var controllerPath = options.Value.OutputPath + Delimiter + "Czar.Cms.Site\\Controllers";
             if (!Directory.Exists(controllerPath))
             {
                 Directory.CreateDirectory(controllerPath);
@@ -216,7 +219,7 @@ namespace Czar.Cms.DataBase
 
         private static void GenerateEntity(DbTable table, bool ifExsitedCovered = false)
         {
-            var modelPath = options.Value.OutputPath + Delimiter + "Models";
+            var modelPath = options.Value.OutputPath + Delimiter + "Czar.Cms.ViewModels";
             if (!Directory.Exists(modelPath))
             {
                 Directory.CreateDirectory(modelPath);
